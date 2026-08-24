@@ -57,13 +57,8 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/slots', slotRoutes);
 
-const path = require('path');
-// Serve static files from the frontend/dist directory
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// Handle React routing, return all requests to React app
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+app.get('/', (req, res) => {
+  res.send('MediBook API is running!');
 });
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
