@@ -27,7 +27,11 @@ async function startServer() {
   try {
     await mongoose.connect(uri);
     console.log(`Connected to MongoDB${isMemory ? ' (In-Memory)' : ''}`);
-    if (isMemory) {
+    const Doctor = require('./models/Doctor');
+    const doctorCount = await Doctor.countDocuments();
+    
+    if (isMemory || doctorCount === 0) {
+      console.log('Database is empty or in-memory, running seed...');
       const { runSeed } = require('./seed');
       await runSeed();
     }
